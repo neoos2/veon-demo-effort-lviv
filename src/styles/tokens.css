@@ -1,0 +1,77 @@
+/* Hallmark · shape: long scroll · genre: modern-minimal · theme: custom · job: hire+buy · idea: "Масштаб об'єкта показаний шириною шрифту: від квартири до залізничного вантажу" · vibe: "світло, точно, міцно, по-львівськи діловито"
+ * paper: #F4F3EF · accent: #FFCD28 · display: Pliant · body: Libre Franklin · hero: index — H1 і кнопка телефону над «сходами масштабу» з шести об'єктів · nav: одна лінія з номером · footer: компактний темний · imagery: client photos (монохром ink→paper) · signature: жовта мірна смуга і ширина шрифту
+ * axes: light/grotesk-wide/chromatic-yellow · posture: full-palette · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: imagery, реальні фото клієнта в одній монохромній обробці лише там, де вони підсилюють масштаб (бізнес, пульт, виїзд) */
+/* Hallmark · answered F19 · вісь wght Pliant плавно змінюється разом з wdth у «сходах» і мозаїці — це ідея концепції; поза ними 3 накреслення (Pliant 800, Franklin 400/600) */
+/* Hallmark · dismissed 23 · жовті цифри пульта на темній смузі #trust прямо затверджені в concept.md (розділ Доказ), контраст 10,75:1 */
+/* Hallmark · dismissed 40 · цифра 5 «Моніторинг» — Pliant 43–54px зеленим #007A38 на жовтому, великий текст; поріг 3:1, фактично 3,6:1 */
+/* Hallmark · dismissed 28a · LCP першого екрана — текст H1 і сходи; перше фото стоїть у #business нижче першого екрана, lazy там коректний */
+/* Client design tokens: only from design/concept.md (veon-concept: colors, fonts). */
+:root {
+  /* colour */
+  --color-bg: #F4F3EF;
+  --color-surface-2: #E9E7E0;
+  --color-text: #212121;
+  --color-muted: #5B5A55;
+  --color-accent: #FFCD28;
+  --color-accent-ink: #212121;
+  --color-green: #009745;
+  --color-green-text: #007A38;
+  --color-dark: #212121;
+  --color-on-dark: #F4F3EF;
+  --color-muted-on-dark: #B5B2A9;
+  --color-rule: #CFCCC3;
+  --color-rule-dark: #4A4944;
+  --color-border: #8A877E;
+  --color-focus: #212121;
+  --color-focus-on-dark: #FFCD28;
+
+  /* type */
+  --font-display: "Pliant", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Libre Franklin", system-ui, sans-serif;
+  --text-xs: 0.875rem;   /* 14 */
+  --text-base: 1.0625rem; /* 17 */
+  --text-lead: 1.3125rem; /* 21 */
+  --text-title: 1.6875rem; /* 27 */
+  --text-l: 2.125rem;    /* 34 */
+  --text-section: clamp(2.125rem, 1.5rem + 2vw, 2.6875rem); /* 34 → 43 */
+  --text-display-s: clamp(2.6875rem, 2rem + 2.4vw, 3.375rem); /* 43 → 54 */
+  --text-display: clamp(3.375rem, 2.2rem + 4vw, 4.25rem);     /* 54 → 68 */
+  --text-h1: clamp(2.125rem, 1.2rem + 3.2vw, 3.75rem);
+  --lh-tight: 1.04;
+  --lh-body: 1.55;
+  --ws-display: 0.06em;
+
+  /* space: 4/8 scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-10: 2.5rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-36: 9rem;
+  --section-y: clamp(4rem, 2.4rem + 4.5vw, 7rem);
+  --space: clamp(1.25rem, 0.2rem + 3.6vw, 4rem); /* page gutter 20 / 40 / 64 */
+  --container: 1360px;
+  --header-h: 64px;
+  --bar-h: 56px;
+
+  /* shape */
+  --radius: 2px;
+  --rule-w: 1px;
+  --stroke: 1.5px;
+  --focus-w: 3px;
+
+  /* motion */
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --dur: 420ms;
+  --dur-fast: 160ms;
+  --dur-press: 120ms;
+  --dur-bar: 480ms;
+  --reveal-shift: 8px;
+}
+@media (max-width: 40rem) {
+  :root { --reveal-shift: 4px; --header-h: 56px; }
+}

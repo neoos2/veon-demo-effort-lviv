@@ -1,0 +1,9 @@
+---
+// Pinned action bar on phones after the first screen; hides near #contacts (R-004).
+import Icon from "./Icon.astro";
+import { phones, email } from "../data/site";
+---
+<div class="action-bar" data-rec="R-004" aria-label="Швидкі дії" role="region">
+  <a class="action-bar__call" href={phones.sales.href}><Icon name="phone" size={20} /><span>Зателефонувати</span></a>
+  <a class="action-bar__mail" href={email.href}><Icon name="mail" size={20} /><span>Написати</span></a>
+</div>

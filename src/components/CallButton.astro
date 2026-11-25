@@ -1,0 +1,11 @@
+---
+// Primary action: yellow, 2 px radius, two lines «Зателефонувати» / number (concept §Компоненти).
+import Icon from "./Icon.astro";
+import { phones } from "../data/site";
+interface Props { label?: string; class?: string; rec?: string; }
+const { label = "Зателефонувати", class: cls, rec } = Astro.props;
+---
+<a class:list={["btn-call", cls]} href={phones.sales.href} data-rec={rec}>
+  <Icon name="phone" size={22} class="btn-call__icon" />
+  <span class="btn-call__text"><span class="btn-call__label">{label}</span><span class="btn-call__num">{phones.sales.label}</span></span>
+</a>

@@ -1,0 +1,26 @@
+---
+import FutureLink from "./FutureLink.astro";
+import { address, phones, soon } from "../data/site";
+const pages = ["Про компанію", "Послуги", "Ціни", "Акції", "Вакансії", "Політика конфіденційності"];
+---
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <a class="brand brand--dark" href="#top" aria-label="Ефорт — на початок сторінки">
+        <img class="brand__mark" src="img/logo-96.webp" width="36" height="48" alt="" />
+        <span class="brand__name">Ефорт</span>
+      </a>
+      <p class="site-footer__legal">ТОВ «Агентство економічної безпеки «Ефорт»», {address.line}</p>
+      <a class="site-footer__phone" href={phones.sales.href} data-rec="SE-R004">{phones.sales.label}</a>
+    </div>
+    <nav class="site-footer__pages" aria-label="Сторінки сайту">
+      <ul>
+        <li><a href="#clients">Клієнтам</a></li>
+        {pages.map((p) => <li><FutureLink note={soon}>{p}</FutureLink></li>)}
+      </ul>
+    </nav>
+  </div>
+  <div class="container site-footer__base">
+    <p>© 2026 «Ефорт»</p>
+  </div>
+</footer>

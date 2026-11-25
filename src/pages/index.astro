@@ -1,0 +1,324 @@
+---
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import MobileBar from "../components/MobileBar.astro";
+import FutureLink from "../components/FutureLink.astro";
+import CallButton from "../components/CallButton.astro";
+import Photo from "../components/Photo.astro";
+import Icon from "../components/Icon.astro";
+import { phones, email, address, soon, ladder, scale, cities } from "../data/site";
+
+const title = "Охоронна компанія у Львові — пультова охорона | Ефорт";
+const description = "Пультова й фізична охорона у Львові та області, супровід цінностей і залізничних вантажів. Монтаж сигналізації 1–3 доби. Телефон +38 067 3333 500";
+
+// Business directions: tile width grows with the scale of the job (concept §5).
+const directions = [
+  { name: "Системи безпеки", line: "Відеонагляд, контроль доступу, охоронна сигналізація, охорона периметра і тривожна кнопка.", fact: "Проєкт під об'єкт і безкоштовна консультація з виїздом інженера", level: 1, photo: { name: "systems", widths: [400, 800], ratio: [8, 5] as [number, number], alt: "Камери відеонагляду на стіні будівлі" } },
+  { name: "Фізична охорона", line: "Пости на об'єкті та прилеглій території, контрольно-пропускний режим, за кожним об'єктом закріплений інспектор охорони.", fact: "Цілодобова взаємодія з оперативно-черговою частиною", level: 2, photo: { name: "guard", widths: [400, 800], ratio: [4, 5] as [number, number], alt: "Охоронник «Ефорт» з рацією, на рукаві шеврон компанії" } },
+  { name: "Пожежна і техногенна безпека", line: "Документація, проєкти протипожежних систем, монтаж, обслуговування і пультове спостереження за пожежною автоматикою.", fact: "Стан автоматики контролюємо цілодобово через пульт", level: 3, photo: { name: "fire", widths: [400, 800], ratio: [8, 5] as [number, number], alt: "Прилад пожежної сигналізації: палець натискає кнопку на панелі" } },
+  { name: "Клінінг АЗК", line: "Очищення поверхонь і територій заправних станцій від технічних забруднень; під час робіт АЗК не зупиняється.", fact: "3 600 000 м² опрацьованих площ", level: 4 },
+  { name: "Супровід цінностей", line: "Окремий підрозділ зі спеціальним оснащенням; супровід на машині виконавця або замовника, водій-охоронець і охоронники.", fact: "З 2014 року — супровід банківських інкасацій", level: 5, photo: { name: "valuables", widths: [400, 800], ratio: [4, 5] as [number, number], alt: "Охоронник із кейсом для цінностей біля автомобіля «Ефорт»" } },
+  { name: "Супровід залізничних вантажів", line: "Цілодобовий онлайн GPS-контроль руху охорони, матеріальна відповідальність за вантаж, логістика по всій Україні.", fact: "З 2015 року; досвід охорони перевезень 2 500 000 т вантажу", level: 6, photo: { name: "rail", widths: [440], ratio: [4, 5] as [number, number], alt: "Вантажні вагони на залізничних коліях" } },
+];
+
+const steps = [
+  { title: "Консультація", text: "З виїздом інженера на об'єкт.", key: "безкоштовно" },
+  { title: "Проєкт", text: "Кілька варіантів системи, розроблених під ваш об'єкт." },
+  { title: "Договір", text: "Відповідно до обраної системи та ваших побажань." },
+  { title: "Монтаж", text: "Залежно від типу й кількості обладнання.", key: "1–3 доби" },
+  { title: "Моніторинг", text: "Цілодобово: телефонна лінія, радіоканал, GPRS і GSM.", live: true },
+  { title: "Реагування", text: "Виїзд групи на сигнал тривоги; охорона об'єкта до прибуття власника." },
+];
+
+const objects = [
+  { name: "Кредитно-фінансові установи", count: "87" },
+  { name: "Об'єкти торгівлі", count: "87" },
+  { name: "Заправні станції", count: "38" },
+  { name: "Нафтобази", count: "12" },
+];
+
+const clientLogos = [
+  { file: "okko-group", alt: "OKKO Group", w: 162, h: 42 },
+  { file: "naftogaz", alt: "Концерн Галнафтогаз", w: 210, h: 44 },
+  { file: "raifaisen", alt: "Райффайзен Банк Аваль", w: 186, h: 38 },
+  { file: "vsbank", alt: "VS Bank", w: 216, h: 58 },
+  { file: "fujikura", alt: "Fujikura", w: 178, h: 47 },
+  { file: "hliboprom", alt: "Концерн Хлібпром", w: 64, h: 78 },
+  { file: "tech-park", alt: "Technopark Business City", w: 102, h: 78 },
+  { file: "universal", alt: "Універсальна страхова компанія", w: 246, h: 54 },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "#organization",
+      name: "Ефорт",
+      legalName: "ТОВ «Агентство економічної безпеки «Ефорт»»",
+      logo: "img/logo-192.png",
+      email: "effort-service@effort.com.ua",
+      memberOf: [
+        { "@type": "Organization", name: "Українська федерація професіоналів безпеки" },
+        { "@type": "Organization", name: "European Security Business Club (ESBOC)" },
+      ],
+      contactPoint: [
+        { "@type": "ContactPoint", telephone: "+380673333500", contactType: "sales", areaServed: "UA", availableLanguage: "uk" },
+        { "@type": "ContactPoint", telephone: "+380322989340", contactType: "customer service", areaServed: "UA", availableLanguage: "uk" },
+        { "@type": "ContactPoint", telephone: "+380800333350", contactType: "technical support", areaServed: "UA", availableLanguage: "uk" },
+      ],
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "#localbusiness",
+      name: "Ефорт — охоронна компанія у Львові",
+      parentOrganization: { "@id": "#organization" },
+      telephone: "+380673333500",
+      email: "effort-service@effort.com.ua",
+      image: "img/logo-192.png",
+      address: { "@type": "PostalAddress", streetAddress: "вул. Героїв УПА, 72", addressLocality: "Львів", postalCode: "79018", addressCountry: "UA" },
+      areaServed: cities.map((c) => ({ "@type": "City", name: c })),
+    },
+  ],
+};
+---
+<Base lang="uk" title={title} description={description}>
+  <script slot="head" type="application/ld+json" data-rec="SE-R003" set:html={JSON.stringify(jsonLd)} />
+  <Header slot="header" />
+
+  <!-- 1. Hero: H1, call, scale ladder (Index posture) -->
+  <Section id="hero" rec="R-001" class="hero">
+    <div class="container hero__top">
+      <h1 class="hero__title" data-rec="SE-R001">Охоронна компанія <span class="nowrap">у Львові</span> — від квартири до залізничного вантажу</h1>
+      <div class="hero__aside">
+        <p class="hero__lead">Пультова й фізична охорона, супровід цінностей і вантажів. Власний пульт і групи реагування.</p>
+        <div class="hero__actions">
+          <CallButton rec="R-001,SE-R004" />
+          <p class="hero__mail">Для бізнесу: <a class="text-link" href={email.href}>{email.label}</a></p>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <nav class="container ladder" aria-label="Від квартири до вантажу" data-rec="R-001,MA-R003">
+      <div class="ladder__group">
+        <p class="ladder__label" id="lad-home">Для дому</p>
+        <ul aria-labelledby="lad-home">
+          {ladder.home.map((r, i) => (
+            <li><a class="rung" href="#home" style={`--lvl:${r.level}; --i:${i}`}>
+              <span class="rung__bar" aria-hidden="true"><span></span></span>
+              <span class="rung__name">{r.name}</span>
+              <span class="rung__meta">{r.meta}</span>
+              <Icon name="arrow" size={22} class="rung__arrow" />
+            </a></li>
+          ))}
+        </ul>
+      </div>
+      <div class="ladder__group">
+        <p class="ladder__label" id="lad-biz">Для бізнесу</p>
+        <ul aria-labelledby="lad-biz">
+          {ladder.business.map((r, i) => (
+            <li><a class="rung" href="#business" style={`--lvl:${r.level}; --i:${i + 2}`}>
+              <span class="rung__bar" aria-hidden="true"><span></span></span>
+              <span class="rung__name">{r.name}</span>
+              <span class="rung__meta">{r.meta}</span>
+              <Icon name="arrow" size={22} class="rung__arrow" />
+            </a></li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <dl class="scale" data-rec="R-003">
+        {scale.map((s) => <div class="scale__item"><dt class="visually-hidden">{s.label}</dt><dd><span class="scale__num">{s.value}</span> <span class="scale__label">{s.label}</span></dd></div>)}
+      </dl>
+    </div>
+  </Section>
+
+  <!-- 2. Home -->
+  <Section id="home" rec="R-002" class="section home">
+    <div class="container home__grid">
+      <div class="home__offer" data-rec="R-002,MA-R003">
+        <h2 class="h2">Охорона для дому</h2>
+        <p class="lead">Пультова охорона квартири чи будинку з обладнанням Ajax, Tiras Orion Nova X або U-Prox.</p>
+        <div class="price-main">
+          <p class="price-main__from">від</p>
+          <p class="price-main__num">330</p>
+          <p class="price-main__unit">грн/міс<br />квартира</p>
+        </div>
+        <ul class="price-more">
+          <li><span class="price-more__num">450</span><span>грн/міс — будинок, котедж</span></li>
+          <li><span class="price-more__num">350</span><span>грн/міс — тривожна кнопка</span></li>
+        </ul>
+        <p class="note">Абонплата — за прайсом сайту «Ефорт», від зазначеної суми.</p>
+      </div>
+      <div class="home__terms">
+        <h3 class="h3">Що з обладнанням</h3>
+        <dl class="terms">
+          <div><dt>Оренда стартового комплекту</dt><dd>0,01 грн на строк договору</dd></div>
+          <div><dt>Монтаж і підключення</dt><dd>0 грн, якщо придбати стартовий комплект</dd></div>
+          <div><dt>Розстрочка</dt><dd>6 платежів без переплат</dd></div>
+          <div><dt>Вже є сигналізація</dt><dd>безкоштовно переключимо на пульт «Ефорт»</dd></div>
+          <div><dt>Строк монтажу</dt><dd>1–3 доби</dd></div>
+        </dl>
+        <CallButton label="Підключити охорону" class="home__cta" rec="R-002" />
+      </div>
+    </div>
+  </Section>
+
+  <!-- 3. Business: mosaic, tile width grows with the job -->
+  <Section id="business" rec="R-002" class="section business">
+    <div class="container">
+      <div class="head-split">
+        <h2 class="h2 h2--scale">Від тривожної кнопки в офісі <span class="h2__far">до вантажного потяга</span></h2>
+        <p class="lead">Для бізнесу — шість напрямів охорони. Кожен договір складаємо під вимоги об'єкта.</p>
+      </div>
+      <ul class="mosaic">
+        {directions.map((d, i) => (
+          <li class:list={["tile", `tile--${d.level}`, d.photo && "tile--photo"]} style={`--lvl:${d.level}; --reveal-delay:${i * 60}ms`} data-reveal>
+            {d.photo && (
+              <div class="tile__media">
+                <Photo name={d.photo.name} widths={d.photo.widths} ratio={d.photo.ratio} alt={d.photo.alt} sizes={d.level === 6 ? "(min-width: 60rem) 36vw, 100vw" : "(min-width: 60rem) 30vw, 100vw"} />
+              </div>
+            )}
+            <div class="tile__body">
+              <h3 class="tile__name">{d.name}</h3>
+              <p class="tile__line">{d.line}</p>
+              <p class="tile__fact">{d.fact}</p>
+              <FutureLink note={soon} class="tile__more">Сторінка напряму</FutureLink>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div class="cta-row">
+        <CallButton label="Обговорити об'єкт" rec="R-002" />
+        <p class="cta-mail">Технічне завдання чи тендер: <a class="text-link" href={email.href}>{email.label}</a></p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 4. Process: the one yellow band -->
+  <Section id="process" rec="R-005" class="section process">
+    <div class="container">
+      <div class="head-split">
+        <h2 class="h2">Як ми підключаємо об'єкт</h2>
+        <p class="lead">Шість кроків від першої розмови до виїзду групи реагування.</p>
+      </div>
+      <ol class="steps">
+        {steps.map((s, i) => (
+          <li class:list={["step", s.live && "step--live", s.key && "step--key"]} data-reveal style={`--reveal-delay:${i * 60}ms; --n:${i + 1}`}>
+            <span class="step__bar" aria-hidden="true"></span>
+            <span class="step__num" aria-hidden="true">{i + 1}</span>
+            <h3 class="step__title">{s.title}</h3>
+            {s.key && <p class="step__key">{s.key}</p>}
+            <p class="step__text">{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </Section>
+
+  <!-- 5. Trust: dark band -->
+  <Section id="trust" rec="R-003" class="section trust">
+    <div class="container">
+      <div class="head-split">
+        <h2 class="h2">Пульт і групи реагування</h2>
+        <p class="lead">Сигнал з об'єкта приймає власний пульт центральної охорони «Ефорт», на виїзд їде власна група.</p>
+      </div>
+      <div class="trust__grid">
+        <figure class="trust__photo">
+          <Photo name="pult2" widths={[416]} ratio={[4, 5]} alt="Рація в руці оператора пульта на тлі моніторів" sizes="(min-width: 60rem) 30vw, 100vw" />
+          <figcaption>Пульт центральної охорони, 7 видів пульта</figcaption>
+        </figure>
+        <div class="trust__data">
+          <dl class="figures">
+            <div class="figure" data-reveal><dt>операторів пульта</dt><dd>12</dd></div>
+            <div class="figure" data-reveal style="--reveal-delay:60ms"><dt>машин груп реагування</dt><dd>20</dd></div>
+            <div class="figure" data-reveal style="--reveal-delay:120ms"><dt>працівників груп реагування</dt><dd>170</dd></div>
+          </dl>
+          <h3 class="h3 trust__sub">Що вже охороняємо</h3>
+          <table class="objects">
+            <caption class="visually-hidden">Об'єкти під охороною «Ефорт» за типами</caption>
+            <thead><tr><th scope="col">Тип об'єкта</th><th scope="col">Кількість</th></tr></thead>
+            <tbody>
+              {objects.map((o, i) => <tr data-reveal style={`--reveal-delay:${i * 60}ms`}><th scope="row">{o.name}</th><td>{o.count}</td></tr>)}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="trust__clients">
+        <h3 class="h3">Нам довіряють</h3>
+        <ul class="logos">
+          {clientLogos.map((l) => <li><img class:list={[l.w / l.h < 2 && "logo-tall"]} src={`img/client-${l.file}.webp`} width={l.w} height={l.h} alt={l.alt} loading="lazy" decoding="async" /></li>)}
+        </ul>
+        <div class="trust__foot">
+          <p>Член Української федерації професіоналів безпеки та European Security Business Club (ESBOC).</p>
+          <FutureLink note={soon} class="text-link text-link--dark">Детальніше про компанію</FutureLink>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 6. Coverage: typographic map -->
+  <Section id="coverage" class="section coverage">
+    <div class="container coverage__grid">
+      <div class="coverage__text">
+        <h2 class="h2">Де працюємо</h2>
+        <p class="lead">Пультова охорона з виїздом груп реагування:</p>
+        <ul class="cities">
+          {cities.map((c, i) => <li class:list={["city", i === 0 && "city--main"]}>{c}</li>)}
+        </ul>
+      </div>
+      <div class="coverage__aside">
+        <dl class="reach">
+          <div><dt>областей України</dt><dd>14</dd></div>
+          <div><dt>міст з офісами й телефонами «Ефорт»</dt><dd>13</dd></div>
+        </dl>
+        <FutureLink note={soon} class="text-link">Офіси в містах</FutureLink>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 7. Existing clients -->
+  <Section id="clients" rec="R-004" class="section clients">
+    <div class="container clients__grid">
+      <div>
+        <h2 class="h2">Вже наш клієнт</h2>
+        <p class="lead">Для чинних клієнтів окремий номер — технічна підтримка, а не продаж.</p>
+      </div>
+      <div class="clients__support">
+        <p class="muted">{phones.support.role}</p>
+        <a class="big-phone" href={phones.support.href}>{phones.support.label}</a>
+      </div>
+      <div class="clients__app">
+        <h3 class="h3">Застосунок «Effort»</h3>
+        <p>Баланс, історія й оплата, зв'язок з оператором і менеджером — для клієнтів пультової охорони та пожежного спостереження.</p>
+        <p class="stores"><FutureLink note={soon} class="text-link">App Store</FutureLink><FutureLink note={soon} class="text-link">Google Play</FutureLink></p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 8. Contacts -->
+  <Section id="contacts" rec="R-004,SE-R004" class="section contacts">
+    <div class="container contacts__grid">
+      <div class="contacts__head">
+        <h2 class="h2">Контакти</h2>
+        <p class="lead">Номери підписані за призначенням: так ви одразу потрапите до потрібного відділу.</p>
+      </div>
+      <ul class="contact-rows">
+        {Object.values(phones).map((p) => (
+          <li class="contact-row"><span class="contact-row__role">{p.role}</span><a class="contact-row__value" href={p.href}>{p.label}</a></li>
+        ))}
+        <li class="contact-row"><span class="contact-row__role">E-mail</span><a class="contact-row__value contact-row__value--mail" href={email.href}>{email.label}</a></li>
+        <li class="contact-row"><span class="contact-row__role">Адреса</span><span class="contact-row__addr">{address.line}<a class="text-link" href={address.map} target="_blank" rel="noopener"><Icon name="pin" size={18} /><span>Відкрити на карті</span></a></span></li>
+      </ul>
+    </div>
+  </Section>
+
+  <MobileBar />
+  <Footer slot="footer" />
+</Base>

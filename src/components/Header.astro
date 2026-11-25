@@ -1,0 +1,54 @@
+---
+import Icon from "./Icon.astro";
+import FutureLink from "./FutureLink.astro";
+import { phones, email, soon } from "../data/site";
+const links = [
+  { href: "#home", label: "Для дому" },
+  { href: "#business", label: "Для бізнесу" },
+  { href: "#process", label: "Як працюємо" },
+  { href: "#trust", label: "Про нас" },
+  { href: "#contacts", label: "Контакти" },
+];
+---
+<header class="site-header">
+  <div class="container site-header__row">
+    <a class="brand" href="#top" aria-label="Ефорт — на початок сторінки">
+      <img class="brand__mark" src="img/logo-96.webp" srcset="img/logo-48.webp 1x, img/logo-96.webp 2x" width="36" height="48" alt="" />
+      <span class="brand__name">Ефорт</span>
+    </a>
+    <nav class="site-nav" aria-label="Розділи сторінки">
+      <ul>
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <a class="header-phone" href={phones.sales.href} data-rec="SE-R004,MA-R003"><Icon name="phone" size={18} /><span>{phones.sales.label}</span></a>
+    <div class="lang" aria-label="Мова сайту" role="group">
+      <span class="lang__item is-current" aria-current="true">УКР</span>
+      <FutureLink note={soon} class="lang__item">RU</FutureLink>
+      <FutureLink note={soon} class="lang__item">EN</FutureLink>
+    </div>
+    <a class="icon-btn header-call" href={phones.sales.href} aria-label={`Зателефонувати ${phones.sales.label}`} data-rec="SE-R004,MA-R003"><Icon name="phone" size={22} /></a>
+    <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Відкрити меню">
+      <Icon name="menu" size={24} class="menu-toggle__open" />
+      <Icon name="close" size={24} class="menu-toggle__close" />
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <nav aria-label="Меню" class="container mobile-menu__inner">
+      <ul class="mobile-menu__links">
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        <li><a href="#clients">Клієнтам</a></li>
+      </ul>
+      <ul class="mobile-menu__contacts">
+        <li><span class="muted">{phones.sales.role}</span><a href={phones.sales.href}>{phones.sales.label}</a></li>
+        <li><span class="muted">{phones.support.role}</span><a href={phones.support.href}>{phones.support.label}</a></li>
+        <li><span class="muted">E-mail</span><a href={email.href}>{email.label}</a></li>
+      </ul>
+      <div class="lang lang--menu" role="group" aria-label="Мова сайту">
+        <span class="lang__item is-current" aria-current="true">УКР</span>
+        <FutureLink note={soon} class="lang__item">RU</FutureLink>
+        <FutureLink note={soon} class="lang__item">EN</FutureLink>
+      </div>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,18 @@
+---
+// Client photo: WebP in several widths from public/img (scripts/images.mjs). Relative paths — the demo lives in a sub-folder.
+interface Props { name: string; widths: number[]; ratio: [number, number]; alt: string; sizes: string; class?: string; eager?: boolean; }
+const { name, widths, ratio, alt, sizes, class: cls, eager = false } = Astro.props;
+const max = widths[widths.length - 1];
+const srcset = widths.map((w) => `img/${name}-${w}.webp ${w}w`).join(", ");
+---
+<img
+  class:list={["photo", cls]}
+  src={`img/${name}-${max}.webp`}
+  srcset={srcset}
+  sizes={sizes}
+  width={max}
+  height={Math.round((max * ratio[1]) / ratio[0])}
+  alt={alt}
+  loading={eager ? "eager" : "lazy"}
+  decoding="async"
+/>

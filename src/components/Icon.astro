@@ -1,0 +1,14 @@
+---
+// Functional line icons only (concept: 1.5 px, text colour). Decorative: aria-hidden.
+interface Props { name: "phone" | "mail" | "menu" | "close" | "arrow" | "pin"; size?: number; class?: string; }
+const { name, size = 20, class: cls } = Astro.props;
+const paths: Record<Props["name"], string> = {
+  phone: "M5 4h3.2l1.6 4-2 1.3a10.5 10.5 0 0 0 6.9 6.9l1.3-2 4 1.6V19a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3.5 5.6 1.5 1.5 0 0 1 5 4Z",
+  mail: "M3.5 6h17v12h-17zM3.5 6.5l8.5 6.5 8.5-6.5",
+  menu: "M4 7.5h16M4 12h16M4 16.5h16",
+  close: "M6 6l12 12M18 6 6 18",
+  arrow: "M5 12h13M13 7l5 5-5 5",
+  pin: "M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11Zm0-8.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z",
+};
+---
+<svg class:list={["icon", cls]} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d={paths[name]} /></svg>
